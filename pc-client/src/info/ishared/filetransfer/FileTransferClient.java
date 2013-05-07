@@ -49,7 +49,7 @@ public class FileTransferClient {
         });
 
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(
-                "172.17.22.234", 3333));
+                "192.168.0.102", 3333));
 
         /*
          * 这里为了保证connect连接，所以才进行了sleep
@@ -62,7 +62,7 @@ public class FileTransferClient {
         {
             e.printStackTrace();
         }
-        HttpRequest request = new DefaultHttpRequest(HttpVersion.HTTP_1_1,HttpMethod.GET, "tt.jpg");
+        HttpRequest request = new DefaultHttpRequest(HttpVersion.HTTP_1_1,HttpMethod.GET, "mock_location.apk");
         future.getChannel().write(request);
 
         // Wait until the connection is closed or the connection attempt fails.

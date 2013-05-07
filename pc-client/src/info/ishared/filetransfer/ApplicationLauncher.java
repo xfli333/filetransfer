@@ -21,8 +21,8 @@ import java.util.concurrent.Executors;
  */
 public class ApplicationLauncher {
     public static void main(String[] args) {
-        FileTransferServer.getInstance().run();
-//        new FileTransferClient().run();
+//        FileTransferServer.getInstance().run();
+        new FileTransferClient().run();
     }
 
 

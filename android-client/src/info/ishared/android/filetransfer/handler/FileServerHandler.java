@@ -1,5 +1,6 @@
 package info.ishared.android.filetransfer.handler;
 
+import info.ishared.android.filetransfer.AppConfig;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.frame.TooLongFrameException;
@@ -147,7 +148,8 @@ public class FileServerHandler extends SimpleChannelUpstreamHandler {
 
         // Convert to absolute path.
 //        return System.getProperty("user.dir") + File.separator + uri;
-        return "/Users/admin/temp/222/" + uri;
+//        return "/Users/admin/temp/222/" + uri;
+        return AppConfig.SAVE_DIR + uri;
     }
 
     private void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {

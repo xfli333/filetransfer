@@ -37,7 +37,7 @@ public class FileClientHandler extends SimpleChannelUpstreamHandler {
             DefaultHttpResponse httpResponse = (DefaultHttpResponse) e.getMessage();
             String fileName = httpResponse.getHeader("fileName");
 //            downloadFile = new File(System.getProperty("user.dir")+ File.separator + "recived_" + fileName);
-            downloadFile = new File(AppConfig.save_dir+ fileName);
+            downloadFile = new File(AppConfig.SAVE_DIR + fileName);
             readingChunks = httpResponse.isChunked();
         } else {
             HttpChunk httpChunk = (HttpChunk) e.getMessage();
