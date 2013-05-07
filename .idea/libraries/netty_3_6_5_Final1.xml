@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="netty-3.6.5.Final1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/android-client/libs/netty-3.6.5.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
