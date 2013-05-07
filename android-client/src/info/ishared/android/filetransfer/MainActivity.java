@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 import info.ishared.android.filetransfer.handler.HelloWorldClientHandler;
+import info.ishared.android.filetransfer.util.NetworkUtils;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelPipeline;
@@ -25,7 +26,7 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         TextView mInfo=(TextView)this.findViewById(R.id.info);
-        mInfo.setText(AppConfig.save_dir);
+        mInfo.setText(AppConfig.save_dir+"\r\n"+ NetworkUtils.getIpAddress()+"\r\n"+NetworkUtils.getMacAddress(this));
 //        new FileTransferClient().run();
 //        test();
     }
