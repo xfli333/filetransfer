@@ -93,14 +93,22 @@
                   android:background="@drawable/edit_text_background"
                   android:layout_centerVertical="true"
                 />
-        <Button android:id="@+id/client_connect_btn"
-                android:layout_width="60dip"
-                android:layout_height="30dip"
-                android:layout_marginLeft="50dp"
-                android:text="@string/connect"
-                style="@style/BootstrapButton"
-                />
-    </LinearLayout>
 
+    </LinearLayout>
+    <Button android:id="@+id/client_connect_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="@string/connect"
+            style="@style/BootstrapButton"
+            />
+    <ProgressBar
+            android:id="@+id/pb_loading"
+            style="@style/ListSpinner"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="20dp"
+            />
 </LinearLayout>
 
