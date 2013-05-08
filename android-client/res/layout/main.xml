@@ -1,14 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView
-        android:id="@+id/info"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Hello World, MainActivity"
-    />
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@drawable/main_bg"
+        >
+    <TextView
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ShadowText"
+            />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+            >
+        <RadioGroup
+                android:id="@+id/myRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignBottom="@id/info"
+                android:layout_centerHorizontal="true"
+                >
+            <!--第一個RadioButton -->
+            <RadioButton
+                    android:id="@+id/client_radio_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/client_radio_txt"
+                    android:checked="true"
+                    />
+            <!--第二個RadioButton -->
+            <RadioButton
+                    android:id="@+id/server_radio_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/server_radio_txt"
+                    />
+        </RadioGroup>
+    </RelativeLayout>
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+            >
+
+        <TextView android:layout_width="wrap_content"
+                  style="@style/ShadowText"
+                  android:layout_height="30dp"
+                  android:layout_marginLeft="10dp"
+                  android:text="@string/server_ip"
+                  android:layout_marginTop="2dp"
+                  android:layout_centerVertical="true"
+
+                />
+        <EditText android:id="@+id/server_ip_input"
+                  android:layout_width="160dp"
+                  android:layout_height="30dp"
+                  android:layout_marginTop="5dp"
+                  android:layout_marginBottom="5dp"
+                  android:layout_marginLeft="5dp"
+                  android:singleLine="true"
+                  android:textSize="16sp"
+                  android:inputType="phone"
+                  android:background="@drawable/edit_text_background"
+                  android:layout_centerVertical="true"
+                />
+        />
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+            >
+        <TextView
+                android:layout_width="wrap_content"
+                style="@style/ShadowText"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:text="@string/server_port"
+                />
+        <EditText android:id="@+id/server_port_input"
+                  android:layout_width="60dp"
+                  android:layout_height="30dp"
+                  android:layout_marginTop="5dp"
+                  android:layout_marginBottom="5dp"
+                  android:layout_marginLeft="5dp"
+                  android:singleLine="true"
+                  android:textSize="16sp"
+                  android:inputType="numberSigned"
+                  android:background="@drawable/edit_text_background"
+                  android:layout_centerVertical="true"
+                />
+        <Button android:id="@+id/client_connect_btn"
+                android:layout_width="60dip"
+                android:layout_height="30dip"
+                android:layout_marginLeft="50dp"
+                android:text="@string/connect"
+                style="@style/BootstrapButton"
+                />
+    </LinearLayout>
+
 </LinearLayout>
 

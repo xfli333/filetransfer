@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">文件互传助手</string>
+    <string name="client_radio_txt">我是客户端</string>
+    <string name="server_radio_txt">我是服务器</string>
+    <string name="local_ip_info">当前IP地址:</string>
+    <string name="server_ip">服务器IP:</string>
+    <string name="server_port">连接端口:</string>
+    <string name="connect">连接</string>
 </resources>
