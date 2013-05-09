@@ -1,6 +1,7 @@
 package info.ishared.android.filetransfer.handler;
 
 import info.ishared.android.filetransfer.AppConfig;
+import info.ishared.android.filetransfer.util.LogUtils;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.frame.TooLongFrameException;
@@ -32,6 +33,11 @@ import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
  * Time: PM2:50
  */
 public class FileServerHandler extends SimpleChannelUpstreamHandler {
+    @Override
+    public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+        super.channelConnected(ctx, e);
+        LogUtils.log(e.getChannel().getRemoteAddress()+" connected");
+    }
 
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)throws Exception {

@@ -41,74 +41,90 @@
                     />
         </RadioGroup>
     </RelativeLayout>
-    <LinearLayout android:orientation="horizontal"
-                  android:layout_width="match_parent"
+
+    <LinearLayout android:id="@+id/client_view"
+                  android:orientation="vertical"
+                  android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
             >
 
-        <TextView android:layout_width="wrap_content"
-                  style="@style/ShadowText"
-                  android:layout_height="30dp"
-                  android:layout_marginLeft="10dp"
-                  android:text="@string/server_ip"
-                  android:layout_marginTop="2dp"
-                  android:layout_centerVertical="true"
+        <LinearLayout android:orientation="horizontal"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                >
 
+            <TextView android:layout_width="wrap_content"
+                      style="@style/ShadowText"
+                      android:layout_height="30dp"
+                      android:layout_marginLeft="10dp"
+                      android:text="@string/server_ip"
+                      android:layout_marginTop="2dp"
+                      android:layout_centerVertical="true"
+
+                    />
+            <EditText android:id="@+id/server_ip_input"
+                      android:layout_width="160dp"
+                      android:layout_height="30dp"
+                      android:layout_marginTop="5dp"
+                      android:layout_marginBottom="5dp"
+                      android:layout_marginLeft="5dp"
+                      android:singleLine="true"
+                      android:textSize="16sp"
+                      android:inputType="phone"
+                      android:background="@drawable/edit_text_background"
+                      android:layout_centerVertical="true"
+                    />
+            />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                >
+            <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/ShadowText"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/server_port"
+                    />
+            <EditText android:id="@+id/server_port_input"
+                      android:layout_width="60dp"
+                      android:layout_height="30dp"
+                      android:layout_marginTop="5dp"
+                      android:layout_marginBottom="5dp"
+                      android:layout_marginLeft="5dp"
+                      android:singleLine="true"
+                      android:textSize="16sp"
+                      android:inputType="numberSigned"
+                      android:background="@drawable/edit_text_background"
+                      android:layout_centerVertical="true"
+                    />
+
+        </LinearLayout>
+        <Button android:id="@+id/client_connect_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="40dip"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="@string/connect"
+                style="@style/BootstrapButton"
                 />
-        <EditText android:id="@+id/server_ip_input"
-                  android:layout_width="160dp"
-                  android:layout_height="30dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginBottom="5dp"
-                  android:layout_marginLeft="5dp"
-                  android:singleLine="true"
-                  android:textSize="16sp"
-                  android:inputType="phone"
-                  android:background="@drawable/edit_text_background"
-                  android:layout_centerVertical="true"
-                />
-        />
     </LinearLayout>
-    <LinearLayout android:orientation="horizontal"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
             >
-        <TextView
-                android:layout_width="wrap_content"
-                style="@style/ShadowText"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp"
-                android:text="@string/server_port"
+        <ProgressBar
+                android:id="@+id/pb_loading"
+                style="@style/ListSpinner"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
                 />
-        <EditText android:id="@+id/server_port_input"
-                  android:layout_width="60dp"
-                  android:layout_height="30dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginBottom="5dp"
-                  android:layout_marginLeft="5dp"
-                  android:singleLine="true"
-                  android:textSize="16sp"
-                  android:inputType="numberSigned"
-                  android:background="@drawable/edit_text_background"
-                  android:layout_centerVertical="true"
-                />
-
-    </LinearLayout>
-    <Button android:id="@+id/client_connect_btn"
-            android:layout_width="fill_parent"
-            android:layout_height="40dip"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:text="@string/connect"
-            style="@style/BootstrapButton"
-            />
-    <ProgressBar
-            android:id="@+id/pb_loading"
-            style="@style/ListSpinner"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="20dp"
-            />
+    </RelativeLayout>
 </LinearLayout>
 

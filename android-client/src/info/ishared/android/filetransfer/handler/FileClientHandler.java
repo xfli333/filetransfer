@@ -1,17 +1,21 @@
 package info.ishared.android.filetransfer.handler;
 
+import android.os.Handler;
+import android.os.Message;
 import info.ishared.android.filetransfer.AppConfig;
+import info.ishared.android.filetransfer.MainActivity;
+import info.ishared.android.filetransfer.util.LogUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.ExceptionEvent;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
+import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
 import org.jboss.netty.handler.codec.http.HttpChunk;
 import org.jboss.netty.handler.codec.http.HttpResponse;
 
 import java.io.File;
 import java.io.FileOutputStream;
+
+import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;
+import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,22 +27,26 @@ public class FileClientHandler extends SimpleChannelUpstreamHandler {
     private volatile boolean readingChunks;
     private File downloadFile;
     private FileOutputStream fOutputStream = null;
+    private Handler handler;
+
+    public FileClientHandler() {
+    }
+
+
+    public FileClientHandler(Handler handler) {
+        this.handler = handler;
+    }
 
     @Override
-    public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
-            throws Exception {
-        /*
-         * 按照channle的顺序进行处理
-         * server先发送HttpResponse过来，所以这里先对HttpResponse进行处理，进行文件判断之类
-         * 之后，server发送的都是ChunkedFile了。
-         */
+    public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 
         if (e.getMessage() instanceof HttpResponse) {
             DefaultHttpResponse httpResponse = (DefaultHttpResponse) e.getMessage();
-            String fileName = httpResponse.getHeader("fileName");
+
+                String fileName = httpResponse.getHeader("fileName");
 //            downloadFile = new File(System.getProperty("user.dir")+ File.separator + "recived_" + fileName);
-            downloadFile = new File(AppConfig.SAVE_DIR + fileName);
-            readingChunks = httpResponse.isChunked();
+                downloadFile = new File(AppConfig.SAVE_DIR + fileName);
+                readingChunks = httpResponse.isChunked();
         } else {
             HttpChunk httpChunk = (HttpChunk) e.getMessage();
             if (!httpChunk.isLast()) {
@@ -62,9 +70,32 @@ public class FileClientHandler extends SimpleChannelUpstreamHandler {
         }
     }
 
+
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
-            throws Exception {
-        System.out.println(e.getCause());
+    public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+        super.channelConnected(ctx, e);
+        Message msg = new Message();
+        msg.what = MainActivity.CONNECT_SUCCESS;
+        handler.sendMessage(msg);
+    }
+
+    @Override
+    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+        super.channelDisconnected(ctx, e);
+        Message msg = new Message();
+        msg.what = MainActivity.CONNECT_DISCONNECTED;
+        handler.sendMessage(msg);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
+        if (e.getCause().getLocalizedMessage().startsWith("connection timed out")) {
+            Message msg = new Message();
+            msg.what = MainActivity.CONNECT_FAILED;
+            handler.sendMessage(msg);
+            LogUtils.log(e.getCause().getLocalizedMessage());
+        }else{
+            LogUtils.log(e.getCause().getLocalizedMessage());
+        }
     }
 }

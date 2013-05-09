@@ -31,11 +31,32 @@ import java.net.URLDecoder;
  */
 public class FileServerHandler extends SimpleChannelUpstreamHandler {
 
+
+    @Override
+    public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+        super.channelConnected(ctx, e);
+        System.out.println(e.getChannel().getRemoteAddress() + " connect");
+    }
+
+    @Override
+    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+        super.channelDisconnected(ctx, e);
+        System.out.println(e.getChannel().getRemoteAddress() + " Disconnected");
+    }
+
+
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)throws Exception {
+
+
         HttpRequest request = (HttpRequest) e.getMessage();
         if (request.getMethod() != GET) {
             sendError(ctx, METHOD_NOT_ALLOWED);
+            return;
+        }
+
+        if(request.getHeader("ooo")!=null){
+            System.out.println(request.getHeader("ooo"));
             return;
         }
 
