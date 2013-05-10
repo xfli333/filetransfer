@@ -1,6 +1,7 @@
 package info.ishared.filetransfer;
 
 import info.ishared.filetransfer.handler.FileServerHandler;
+import info.ishared.filetransfer.handler.HelloWorldServerHandler;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -45,10 +46,10 @@ public class FileTransferServer {
             {
                 ChannelPipeline pipeline = pipeline();
                 pipeline.addLast("decoder", new HttpRequestDecoder());
-                pipeline.addLast("aggregator", new HttpChunkAggregator(65536));
+//                pipeline.addLast("aggregator", new HttpChunkAggregator(65536));
                 pipeline.addLast("encoder", new HttpResponseEncoder());
                 pipeline.addLast("chunkedWriter", new ChunkedWriteHandler());
-                pipeline.addLast("handler", new FileServerHandler());
+                pipeline.addLast("handler", new HelloWorldServerHandler());
                 return pipeline;
             }
 

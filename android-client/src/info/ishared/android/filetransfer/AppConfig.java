@@ -11,5 +11,6 @@ import android.os.Environment;
 public class AppConfig {
     public static final String TAG = "FILE TRANSFER";
     public static final String SAVE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Download/";
+    public static final String SD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()+"/";
     public static final int PORT=3333;
 }

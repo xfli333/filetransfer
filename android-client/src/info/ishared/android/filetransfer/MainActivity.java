@@ -28,16 +28,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private RadioButton mClientBtn;
     private RadioButton mServerBtn;
     private Button mConnectBtn;
+    private Button mStartServerBtn;
+    private Button mSendBtn;
 
     private ProgressBar mLoadingView;
-    private View mClientView;
     private Handler mHandler;
     private MainController mController;
+
+    private String port;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        port = NetworkUtils.getLocalIpAddress(this);
         initUI();
 
         mHandler = new Handler() {
@@ -46,8 +50,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 switch (msg.what) {
                     case CONNECT_SUCCESS:
                         ViewUtils.hideView(mLoadingView);
-                        ToastUtils.showMessage(MainActivity.this,"connect success");
-                        mController.test();
+                        ToastUtils.showMessage(MainActivity.this, "connect success");
                         break;
                     case CONNECT_FAILED:
                         ViewUtils.hideView(mLoadingView);
@@ -86,9 +89,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mServerBtn.setOnClickListener(this);
         mConnectBtn = (Button) this.findViewById(R.id.client_connect_btn);
         mConnectBtn.setOnClickListener(this);
+        mStartServerBtn = (Button) this.findViewById(R.id.start_server_btn);
+        mStartServerBtn.setOnClickListener(this);
+        mSendBtn = (Button) this.findViewById(R.id.send_file_btn);
+        mSendBtn.setOnClickListener(this);
 
         mLoadingView = (ProgressBar) this.findViewById(R.id.pb_loading);
-        mClientView = this.findViewById(R.id.client_view);
 
     }
 
@@ -96,15 +102,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.client_radio_btn:
-                ViewUtils.showView(mClientView);
+                mServerIpEditText.setEnabled(true);
+                mServerIpEditText.setText("");
+                ViewUtils.hideView(mStartServerBtn);
+                ViewUtils.showView(mConnectBtn);
                 break;
             case R.id.server_radio_btn:
-                ViewUtils.hideView(mClientView);
+                mServerIpEditText.setEnabled(false);
+                mServerIpEditText.setText(port+"");
+                ViewUtils.hideView(mConnectBtn);
+                ViewUtils.showView(mStartServerBtn);
                 break;
             case R.id.client_connect_btn:
                 mConnectBtn.setEnabled(false);
                 ViewUtils.showView(mLoadingView);
                 mController.connectServer("172.17.22.234",3333);
+                break;
+            case R.id.send_file_btn:
+                try {
+                    mController.sendFile("x-firewall.apk");
+                } catch (Exception e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
                 break;
         }
     }
