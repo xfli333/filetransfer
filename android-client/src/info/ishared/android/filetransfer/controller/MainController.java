@@ -76,12 +76,17 @@ public class MainController {
         channel = future.getChannel();
     }
 
-    public void sendFile(final String filename) throws Exception {
+    public void requestFile(String fileName){
+        MessageUtils.requestFile(fileName,channel);
+    }
 
-//        File file = new File(AppConfig.SAVE_DIR+filename);
+    public void sendFile(String filename) throws Exception {
         File file = new File(AppConfig.SD_PATH+"bluetooth/IMG_20121001_135254.jpg");
         MessageUtils.sendFile(file,channel);
+    }
 
+    public void sendMessage(String message){
+        MessageUtils.sendMessage(message,channel);
     }
 
     public void closeConnect() {

@@ -1,5 +1,6 @@
 package info.ishared.android.filetransfer.handler;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import info.ishared.android.filetransfer.AppConfig;
@@ -42,11 +43,25 @@ public class FileClientHandler extends SimpleChannelUpstreamHandler {
 
         if (e.getMessage() instanceof HttpResponse) {
             DefaultHttpResponse httpResponse = (DefaultHttpResponse) e.getMessage();
-
+            String msg=httpResponse.getHeader("msg");
+            if(msg.equals("OK")){
+                Message message = new Message();
+                message.what = MainActivity.ACCEPT_SEND;
+                handler.sendMessage(message);
+            }else if(msg.equals("SEND")){
                 String fileName = httpResponse.getHeader("fileName");
-//            downloadFile = new File(System.getProperty("user.dir")+ File.separator + "recived_" + fileName);
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putString("fileName",fileName);
+                message.what = MainActivity.RECEIVE_FILE;
+                message.setData(bundle);
+                handler.sendMessage(message);
+            }
+            else{
+                String fileName = httpResponse.getHeader("fileName");
                 downloadFile = new File(AppConfig.SAVE_DIR + fileName);
                 readingChunks = httpResponse.isChunked();
+            }
         } else {
             HttpChunk httpChunk = (HttpChunk) e.getMessage();
             if (!httpChunk.isLast()) {

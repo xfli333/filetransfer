@@ -1,5 +1,7 @@
 package info.ishared.android.filetransfer.util;
 
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.http.DefaultHttpRequest;
 import org.jboss.netty.handler.codec.http.HttpMethod;
@@ -24,14 +26,16 @@ import static org.jboss.netty.handler.codec.http.HttpHeaders.setContentLength;
 public class MessageUtils {
 
     public static void sendMessage(String msg,Channel channel){
-        channel.write(msg);
+        HttpRequest request = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET,"SEND_MSG");
+        request.setHeader("msg",msg);
+        channel.write(request);
     }
 
     public static void sendFile(File file,Channel channel) throws Exception {
         LogUtils.log( channel.toString());
         final String filename=file.getName();
         HttpRequest request = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, filename);
-
+        request.setHeader("type","sendFile");
 
         RandomAccessFile raf;
         try {
@@ -70,5 +74,12 @@ public class MessageUtils {
         if (!isKeepAlive(request)) {
             writeFuture.addListener(ChannelFutureListener.CLOSE);
         }
+    }
+
+
+    public static void requestFile(String fileName,Channel channel){
+        HttpRequest request = new DefaultHttpRequest(HttpVersion.HTTP_1_1,HttpMethod.GET, fileName);
+        request.setHeader("type","requestFile");
+        channel.write(request);
     }
 }

@@ -16,6 +16,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public static final int CONNECT_SUCCESS = 0;
     public static final int CONNECT_FAILED = 1;
     public static final int CONNECT_DISCONNECTED = 2;
+    public static final int ACCEPT_SEND = 3;
+    public static final int RECEIVE_FILE = 4;
 
 
     /**
@@ -55,12 +57,24 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     case CONNECT_FAILED:
                         ViewUtils.hideView(mLoadingView);
                         mConnectBtn.setEnabled(true);
-                        ToastUtils.showMessage(MainActivity.this,"connect failed");
+                        ToastUtils.showMessage(MainActivity.this, "connect failed");
                         break;
                     case CONNECT_DISCONNECTED:
                         ViewUtils.hideView(mLoadingView);
                         mConnectBtn.setEnabled(true);
-                        ToastUtils.showMessage(MainActivity.this,"connect closed");
+                        ToastUtils.showMessage(MainActivity.this, "connect closed");
+                        break;
+                    case ACCEPT_SEND:
+                        try {
+                            mController.sendFile("1.jpg");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case RECEIVE_FILE:
+                        Bundle bundle = msg.getData();
+                        String fileName = bundle.getString("fileName");
+                        mController.requestFile(fileName);
                         break;
                 }
             }
@@ -109,21 +123,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.server_radio_btn:
                 mServerIpEditText.setEnabled(false);
-                mServerIpEditText.setText(port+"");
+                mServerIpEditText.setText(port + "");
                 ViewUtils.hideView(mConnectBtn);
                 ViewUtils.showView(mStartServerBtn);
                 break;
             case R.id.client_connect_btn:
                 mConnectBtn.setEnabled(false);
                 ViewUtils.showView(mLoadingView);
-                mController.connectServer("172.17.22.234",3333);
+                mController.connectServer("172.17.22.234", 3333);
                 break;
             case R.id.send_file_btn:
-                try {
-                    mController.sendFile("x-firewall.apk");
-                } catch (Exception e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                }
+                mController.sendMessage("x-firewall.apk");
                 break;
         }
     }
