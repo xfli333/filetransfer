@@ -6,6 +6,7 @@ import info.ishared.android.filetransfer.AppConfig;
 import info.ishared.android.filetransfer.MainActivity;
 import info.ishared.android.filetransfer.handler.FileClientHandler;
 import info.ishared.android.filetransfer.util.LogUtils;
+import info.ishared.android.filetransfer.util.MessageUtils;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
@@ -39,6 +40,7 @@ public class MainController {
     private Handler handler;
     ClientBootstrap bootstrap;
     ChannelFuture future;
+    Channel channel;
 
     public MainController(MainActivity mainActivity, Handler handler) {
         this.mainActivity = mainActivity;
@@ -67,66 +69,18 @@ public class MainController {
                 return pipeline;
             }
         });
+        bootstrap.setOption("tcpNoDelay", true);
+        bootstrap.setOption("keepAlive", true);
 
         future = bootstrap.connect(new InetSocketAddress(ip, port));
-
+        channel = future.getChannel();
     }
 
     public void sendFile(final String filename) throws Exception {
 
 //        File file = new File(AppConfig.SAVE_DIR+filename);
         File file = new File(AppConfig.SD_PATH+"bluetooth/IMG_20121001_135254.jpg");
-
-
-        HttpRequest request = new DefaultHttpRequest(HttpVersion.HTTP_1_1,HttpMethod.POST, filename);
-
-
-        RandomAccessFile raf;
-        try {
-            raf = new RandomAccessFile(file, "r");
-        } catch (FileNotFoundException fnfe) {
-            return;
-        }
-        long fileLength = raf.length();
-
-        request.addHeader("fileName", filename);
-
-        setContentLength(request, fileLength);
-
-        Channel ch = future.getChannel();
-
-        // Write the initial line and the header.
-        ch.write(request);
-
-        // Write the content.
-        ChannelFuture writeFuture;
-        if (ch.getPipeline().get(SslHandler.class) != null) {
-            // Cannot use zero-copy with HTTPS.
-            writeFuture = ch.write(new ChunkedFile(raf, 0, fileLength, 8192));
-        } else {
-            // No encryption - use zero-copy.
-            final FileRegion region = new DefaultFileRegion(raf.getChannel(),
-                    0, fileLength);
-            writeFuture = ch.write(region);
-            writeFuture.addListener(new ChannelFutureProgressListener() {
-                public void operationComplete(ChannelFuture future) {
-                    region.releaseExternalResources();
-                }
-
-                public void operationProgressed(ChannelFuture future,long amount, long current, long total) {
-                    LogUtils.log(filename+","+ current+","+total+","+amount);
-                }
-            });
-        }
-
-        // Decide whether to close the connection or not.
-//        if (true) {
-            // Close the connection when the whole content is written out.
-//            writeFuture.addListener(ChannelFutureListener.CLOSE);
-//        }
-
-//        request.setHeader("ooo", "kkk");
-//        future.getChannel().write(response);
+        MessageUtils.sendFile(file,channel);
 
     }
 

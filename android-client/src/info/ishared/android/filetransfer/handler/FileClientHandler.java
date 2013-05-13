@@ -74,6 +74,7 @@ public class FileClientHandler extends SimpleChannelUpstreamHandler {
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
         super.channelConnected(ctx, e);
+        LogUtils.log(e.getChannel().toString());
         Message msg = new Message();
         msg.what = MainActivity.CONNECT_SUCCESS;
         handler.sendMessage(msg);
