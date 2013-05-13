@@ -55,11 +55,6 @@ public class FileServerHandler extends SimpleChannelUpstreamHandler {
             return;
         }
 
-        if(request.getHeader("ooo")!=null){
-            System.out.println(request.getHeader("ooo"));
-            return;
-        }
-
         final String path = sanitizeUri(request.getUri());
         if (path == null) {
             sendError(ctx, FORBIDDEN);

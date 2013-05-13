@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/bootstrap_divider.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/button_background_disabled.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/button_background_enabled.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/button_background_pressed.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/button_background_states.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/edit_text_background.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/edit_text_cursor.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/list_item_background.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/spinner.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/spinner_inner.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/spinner_outer.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/stripe.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/stripe_repeat.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/table_background_alternate_selector.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/drawable/table_background_selector.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/values/colors.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/res/values/styles.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/android-client/src/info/ishared/android/filetransfer/util/ViewUtils.java" charset="UTF-8" />
+  </component>
 </project>
 
