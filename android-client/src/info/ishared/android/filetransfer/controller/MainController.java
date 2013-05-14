@@ -74,6 +74,7 @@ public class MainController {
 
         future = bootstrap.connect(new InetSocketAddress(ip, port));
         channel = future.getChannel();
+
     }
 
     public void requestFile(String fileName){

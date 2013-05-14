@@ -32,6 +32,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private Button mConnectBtn;
     private Button mStartServerBtn;
     private Button mSendBtn;
+    private Button mRequestBtn;
 
     private ProgressBar mLoadingView;
     private Handler mHandler;
@@ -107,6 +108,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mStartServerBtn.setOnClickListener(this);
         mSendBtn = (Button) this.findViewById(R.id.send_file_btn);
         mSendBtn.setOnClickListener(this);
+        mRequestBtn = (Button) this.findViewById(R.id.request_file_btn);
+        mRequestBtn.setOnClickListener(this);
 
         mLoadingView = (ProgressBar) this.findViewById(R.id.pb_loading);
 
@@ -134,6 +137,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.send_file_btn:
                 mController.sendMessage("x-firewall.apk");
+                break;
+            case R.id.request_file_btn:
+                mController.requestFile("/Users/admin/temp/222/QQ2013_4.0.1.apk");
                 break;
         }
     }

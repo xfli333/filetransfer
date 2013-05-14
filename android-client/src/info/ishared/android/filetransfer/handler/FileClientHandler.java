@@ -44,11 +44,12 @@ public class FileClientHandler extends SimpleChannelUpstreamHandler {
         if (e.getMessage() instanceof HttpResponse) {
             DefaultHttpResponse httpResponse = (DefaultHttpResponse) e.getMessage();
             String msg=httpResponse.getHeader("msg");
-            if(msg.equals("OK")){
+            if("OK".equals(msg)){
                 Message message = new Message();
                 message.what = MainActivity.ACCEPT_SEND;
                 handler.sendMessage(message);
-            }else if(msg.equals("SEND")){
+            }else if("SEND_FILE".equals(msg)){
+                LogUtils.log("=====ddddd========");
                 String fileName = httpResponse.getHeader("fileName");
                 Message message = new Message();
                 Bundle bundle = new Bundle();
@@ -56,8 +57,8 @@ public class FileClientHandler extends SimpleChannelUpstreamHandler {
                 message.what = MainActivity.RECEIVE_FILE;
                 message.setData(bundle);
                 handler.sendMessage(message);
-            }
-            else{
+            }else{
+                LogUtils.log("=============");
                 String fileName = httpResponse.getHeader("fileName");
                 downloadFile = new File(AppConfig.SAVE_DIR + fileName);
                 readingChunks = httpResponse.isChunked();
@@ -78,11 +79,12 @@ public class FileClientHandler extends SimpleChannelUpstreamHandler {
                 readingChunks = false;
             }
             fOutputStream.flush();
+            if (!readingChunks) {
+                fOutputStream.close();
+//                e.getChannel().close();
+            }
         }
-        if (!readingChunks) {
-            fOutputStream.close();
-            e.getChannel().close();
-        }
+
     }
 
 

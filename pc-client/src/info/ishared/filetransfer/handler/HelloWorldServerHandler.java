@@ -32,11 +32,16 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
             throws Exception {
 
+
         super.channelConnected(ctx, e);
-        HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
-        response.setHeader("msg","SEND_FILE");
-        response.setHeader("fileName","/Users/admin/temp/222/tt.jpg");
-        e.getChannel().write(response);
+
+
+//
+//        HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
+//        response.setHeader("msg","SEND_FILE");
+//        response.setHeader("fileName","/Users/admin/temp/222/tt.jpg");
+//        response.setChunked(false);
+//        e.getChannel().write(response);
     }
 
 
@@ -51,6 +56,7 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
                 if("sendFile".equals(type)){
                     handleUploadFileInfoEvent(request);
                 }else if("requestFile".equals(type)){
+                    System.out.println("rrrrrrrqqqqqqq");
                     handleRequestFileEvent(request,e.getChannel());
                 }
             }
@@ -62,7 +68,8 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
 
     private void handleRequestFileEvent(HttpRequest request,Channel channel) throws IOException {
 
-        final String path = request.getUri();
+//        final String path ="/Users/admin/temp/222/"+ request.getUri();
+        final String path =request.getUri();
         File file = new File(path);
         if (file.isHidden() || !file.exists()) {
             return;
@@ -77,7 +84,7 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
 
         HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
 
-        response.addHeader("fileName", request.getUri());
+        response.setHeader("fileName", file.getName());
 
         setContentLength(response, fileLength);
 
