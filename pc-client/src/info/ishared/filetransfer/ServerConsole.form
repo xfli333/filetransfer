@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="info.ishared.filetransfer.ServerConsole">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="231"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="ec123" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ac73b" class="javax.swing.JLabel" binding="ipLabel">
+            <constraints/>
+            <properties>
+              <text value="本机IP地址:"/>
+            </properties>
+          </component>
+          <component id="9f5b7" class="javax.swing.JLabel" binding="ipAddress">
+            <constraints/>
+            <properties>
+              <text value="172.17.22.234"/>
+            </properties>
+          </component>
+          <component id="368bd" class="javax.swing.JButton" binding="runServerBtn">
+            <constraints/>
+            <properties>
+              <text value="Run Server"/>
+            </properties>
+          </component>
+          <component id="ecce4" class="javax.swing.JButton" binding="sendFileBtn">
+            <constraints/>
+            <properties>
+              <text value="Send File"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="ff2bd" binding="jScrollPane">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="e6f8b" class="javax.swing.JTable" binding="connectListTable">
+            <constraints/>
+            <properties>
+              <preferredScrollableViewportSize width="450" height="200"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+</form>
