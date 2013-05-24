@@ -38,14 +38,13 @@ public class ServerConsole implements Observer {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
-
-        for (int i = 0; i < 10; i++) {
-            ClientBean clientBean = new ClientBean();
-            clientBean.setClientIP("11.22.12." + i);
-            clientBean.setConnectTime(new Date());
-            clientBeanList.add(clientBean);
-        }
-//    Comment this code to add table dynamically
+//
+//        for (int i = 0; i < 10; i++) {
+//            ClientBean clientBean = new ClientBean();
+//            clientBean.setClientIP("11.22.12." + i);
+//            clientBean.setConnectTime(new Date());
+//            clientBeanList.add(clientBean);
+//        }
 
         connectListTable.setModel(new AbstractTableModel() {
 

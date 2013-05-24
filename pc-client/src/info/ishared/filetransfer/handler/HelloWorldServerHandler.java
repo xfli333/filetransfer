@@ -1,12 +1,14 @@
 package info.ishared.filetransfer.handler;
 
 import info.ishared.filetransfer.model.MyMessage;
+import info.ishared.filetransfer.util.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.http.*;
 import org.jboss.netty.handler.ssl.SslHandler;
 import org.jboss.netty.handler.stream.ChunkedFile;
 
+import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Observable;
@@ -57,7 +59,7 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
     @Override
     public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
         super.channelDisconnected(ctx, e);
-        observer.update(observable,new MyMessage("DISCONNECTED",e.getChannel().getRemoteAddress().toString().substring(1)));
+        observer.update(observable,new MyMessage("DISCONNECTED", StringUtils.getRemoteAddressByChannelStateEvent(e.getChannel())));
     }
 
     @Override
@@ -65,10 +67,28 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
         if (e.getMessage() instanceof HttpRequest) {
             HttpRequest request = (HttpRequest) e.getMessage();
             if(HttpMethod.GET.equals(request.getMethod()) && "SEND_MSG".equals(request.getUri())){
-                handleStringMessage(request,e);
+                String fileName=request.getHeader("msg");
+                int selected = JOptionPane.showConfirmDialog(null, "是否接受文件"+fileName+"?", "来自"+StringUtils.getRemoteAddressByChannelStateEvent(e.getChannel()), JOptionPane.YES_NO_OPTION);
+                if (selected == JOptionPane.NO_OPTION){
+                    return;
+                } else{
+                    JFileChooser chooser = new JFileChooser("*.*");
+                    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    chooser.setSelectedFile(new File(fileName));
+                    int rs = chooser.showSaveDialog(null);
+                    if(rs == JFileChooser.APPROVE_OPTION){
+                        File f = chooser.getSelectedFile();
+//                        System.out.println(f.getParent());
+                        downloadFile = new File(f.getParent()+ "/"+fileName);
+                        handleStringMessage(request, e);
+                    }
+
+                }
+
             }else{
                 String type=request.getHeader("type");
                 if("sendFile".equals(type)){
+                    System.out.println("aaaaa");
                     handleUploadFileInfoEvent(request);
                 }else if("requestFile".equals(type)){
                     System.out.println("rrrrrrrqqqqqqq");
@@ -76,6 +96,7 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
                 }
             }
         } else if(e.getMessage() instanceof HttpChunk){
+            System.out.println("ccc");
             handleUploadFileEvent(e);
         }
     }
@@ -154,7 +175,7 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
     }
 
     private void handleUploadFileInfoEvent(HttpRequest request){
-        downloadFile = new File("/Users/admin/temp/111/" + request.getUri());
+//        downloadFile = new File("/Users/admin/temp/111/" + request.getUri());
         try {
             fOutputStream = new FileOutputStream(downloadFile);
         } catch (FileNotFoundException e) {

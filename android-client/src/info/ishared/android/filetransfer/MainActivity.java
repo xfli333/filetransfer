@@ -136,7 +136,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 mController.connectServer("172.17.22.234", 3333);
                 break;
             case R.id.send_file_btn:
-                mController.sendMessage("x-firewall.apk");
+                mController.sendMessage("test.jpg");
                 break;
             case R.id.request_file_btn:
                 mController.requestFile("/Users/admin/temp/222/QQ2013_4.0.1.apk");
