@@ -1,5 +1,6 @@
 package info.ishared.filetransfer.handler;
 
+import info.ishared.filetransfer.model.MyMessage;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.http.*;
@@ -8,6 +9,8 @@ import org.jboss.netty.handler.stream.ChunkedFile;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.Observable;
+import java.util.Observer;
 
 import static org.jboss.netty.handler.codec.http.HttpHeaders.isKeepAlive;
 import static org.jboss.netty.handler.codec.http.HttpHeaders.setContentLength;
@@ -29,13 +32,20 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
     private File downloadFile;
     private FileOutputStream fOutputStream = null;
 
+    private Observer observer;
+    private Observable observable = new Observable();
+
+    public HelloWorldServerHandler(Observer observer) {
+        this.observer = observer;
+    }
+
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
             throws Exception {
 
 
         super.channelConnected(ctx, e);
 
-
+        observer.update(observable,new MyMessage("CONNECT",e.getChannel().getRemoteAddress().toString().substring(1)));
 //
 //        HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
 //        response.setHeader("msg","SEND_FILE");
@@ -44,6 +54,11 @@ public class HelloWorldServerHandler extends SimpleChannelUpstreamHandler {
 //        e.getChannel().write(response);
     }
 
+    @Override
+    public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+        super.channelDisconnected(ctx, e);
+        observer.update(observable,new MyMessage("DISCONNECTED",e.getChannel().getRemoteAddress().toString().substring(1)));
+    }
 
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws IOException {

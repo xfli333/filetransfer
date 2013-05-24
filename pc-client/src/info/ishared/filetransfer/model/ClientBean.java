@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class ClientBean {
     private String clientIP;
-    private Date connectTie;
+    private Date connectTime;
 
     public String getClientIP() {
         return clientIP;
@@ -20,11 +20,28 @@ public class ClientBean {
         this.clientIP = clientIP;
     }
 
-    public Date getConnectTie() {
-        return connectTie;
+    public Date getConnectTime() {
+        return connectTime;
     }
 
-    public void setConnectTie(Date connectTie) {
-        this.connectTie = connectTie;
+    public void setConnectTime(Date connectTime) {
+        this.connectTime = connectTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ClientBean that = (ClientBean) o;
+
+        if (clientIP != null ? !clientIP.equals(that.clientIP) : that.clientIP != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return clientIP != null ? clientIP.hashCode() : 0;
     }
 }

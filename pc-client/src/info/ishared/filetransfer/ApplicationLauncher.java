@@ -25,7 +25,7 @@ public class ApplicationLauncher {
     public static void main(String[] args) {
 //        FileTransferServer.getInstance().run();
 //        new FileTransferClient().run();
-
+//
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

@@ -12,6 +12,7 @@ import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
 import org.jboss.netty.handler.stream.ChunkedWriteHandler;
 
 import java.net.InetSocketAddress;
+import java.util.Observer;
 import java.util.concurrent.Executors;
 
 import static org.jboss.netty.channel.Channels.pipeline;
@@ -28,6 +29,8 @@ public class FileTransferServer {
     public static FileTransferServer getInstance() {
         return ourInstance;
     }
+
+    private Observer observer;
 
     private FileTransferServer() {
     }
@@ -49,12 +52,16 @@ public class FileTransferServer {
 //                pipeline.addLast("aggregator", new HttpChunkAggregator(65536));
                 pipeline.addLast("encoder", new HttpResponseEncoder());
                 pipeline.addLast("chunkedWriter", new ChunkedWriteHandler());
-                pipeline.addLast("handler", new HelloWorldServerHandler());
+                pipeline.addLast("handler", new HelloWorldServerHandler(observer));
                 return pipeline;
             }
 
         });
 
         bootstrap.bind(new InetSocketAddress(3333));
+    }
+
+    public void setObserver(Observer observer){
+        this.observer = observer;
     }
 }

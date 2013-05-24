@@ -21,7 +21,7 @@
           <component id="9f5b7" class="javax.swing.JLabel" binding="ipAddress">
             <constraints/>
             <properties>
-              <text value="172.17.22.234"/>
+              <text value="127.0.0.1"/>
             </properties>
           </component>
           <component id="368bd" class="javax.swing.JButton" binding="runServerBtn">
